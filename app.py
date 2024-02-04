@@ -26,6 +26,7 @@ def balance_teams():
                 break
             teams_dict[team].append(sorted_players.pop())
 
+
 def display_stats(user_input):
     print(f'\nTeam name: {user_input}')
     print(f'Number of players: {len(teams_dict[user_input])}')
@@ -55,6 +56,7 @@ Teams: {}.
         except Exception as err:
             print(err)
 
+
 #Running the program:
 if __name__ == "__main__":
     #create a copy of the teams and players lists, this way we don't run into case mismatches
@@ -73,3 +75,26 @@ if __name__ == "__main__":
     balance_teams()
     #open user interface in console
     menu()
+
+
+
+
+#-----------------------------------------------------NOTES BELOW------------------------------------
+
+#Another way to approach cleaning the data
+    def alternative_clean_function():
+        TEAMS = copy.deepcopy(constants.TEAMS)
+        PLAYERS = copy.deepcopy(constants.PLAYERS)
+        players = []
+        for index, player in enumerate(PLAYERS,0):
+            players.append({})
+            players[index]['name'] = PLAYERS[index]['name']
+            players[index]['guardians'] = player['guardians'].split(' and ')
+            if player['experience'] == 'YES':
+                players[index]['experience'] = True
+            else:
+                players[index]['experience'] = False
+            players[index]['height'] = int(player['height'][0:2])
+        return players 
+
+    
