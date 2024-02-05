@@ -4,13 +4,17 @@ import random
 
 
 def clean_player_data():
-    for player in players_copy:
-        player['height'] = int(player['height'][0:2])
+    players = []
+    for index, player in enumerate(constants.PLAYERS,0):
+        players.append({})
+        players[index]['name'] = player['name']
+        players[index]['guardians'] = player['guardians'].split(' and ')
         if player['experience'] == 'YES':
-            player['experience'] = True
+            players[index]['experience'] = True
         else:
-            player['experience'] = False
-        player['guardians'] = player['guardians'].split(' and ')
+            players[index]['experience'] = False
+        players[index]['height'] = int(player['height'][0:2])
+    return players
 
 
 def experience_sorter(experience):
@@ -59,11 +63,9 @@ Teams: {}.
 
 #Running the program:
 if __name__ == "__main__":
-    #create a copy of the teams and players lists, this way we don't run into case mismatches
+    #create a copy of the teams and players lists and clean them
     teams_copy = [team.capitalize() for team in constants.TEAMS]
-    players_copy = copy.deepcopy(constants.PLAYERS)
-    #clean data in players_copy
-    clean_player_data()
+    players_copy = clean_player_data()
     #create a dictionary to store team names and the players on those teams
     teams_dict = {team:[] for team in teams_copy}
     #sort players by experience inside of our list, also adding randomness to player assignment
@@ -75,26 +77,3 @@ if __name__ == "__main__":
     balance_teams()
     #open user interface in console
     menu()
-
-
-
-
-#-----------------------------------------------------NOTES BELOW------------------------------------
-
-#Another way to approach cleaning the data
-    def alternative_clean_function():
-        TEAMS = copy.deepcopy(constants.TEAMS)
-        PLAYERS = copy.deepcopy(constants.PLAYERS)
-        players = []
-        for index, player in enumerate(PLAYERS,0):
-            players.append({})
-            players[index]['name'] = PLAYERS[index]['name']
-            players[index]['guardians'] = player['guardians'].split(' and ')
-            if player['experience'] == 'YES':
-                players[index]['experience'] = True
-            else:
-                players[index]['experience'] = False
-            players[index]['height'] = int(player['height'][0:2])
-        return players 
-
-    
